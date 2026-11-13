@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STHAPATI — Indian Architect Field Compendium & Practice System</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            slatebg: '#111214',
+            cardbg: '#181A1E',
+            cardhover: '#1F2228',
+            borderconcrete: '#2A2E37',
+            ochre: '#C2410C',
+            ochrelight: '#EA580C',
+            brass: '#D97706',
+            blueprint: '#0284C7'
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #111214;
+      color: #E5E7EB;
+      font-family: 'Inter', sans-serif;
+      background-image: 
+        linear-gradient(to right, rgba(42, 46, 55, 0.22) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(42, 46, 55, 0.22) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .tectonic-border {
+      border: 1px solid #2A2E37;
+    }
+    .tectonic-card {
+      background: #181A1E;
+      border: 1px solid #2A2E37;
+      transition: all 0.18s ease;
+    }
+    .tectonic-card:hover {
+      border-color: #4B5563;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #111214;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2A2E37;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #C2410C;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-ochre selection:text-white">
+
+  <!-- TOP ARCHITECTURAL SCALE BAR -->
+  <div class="bg-[#0B0C0E] border-b border-borderconcrete px-4 py-1.5 text-[11px] font-mono text-gray-400 flex flex-wrap items-center justify-between gap-2">
+    <div class="flex items-center gap-3">
+      <span class="text-ochrelight font-semibold tracking-wider">STHAPATI // ARCH-OS v2.4</span>
+      <span class="hidden sm:inline text-gray-600">|</span>
+      <span class="hidden sm:inline">INDIAN TIER-1 URBAN PRACTICE &amp; SITE COMPENDIUM</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-1.5 text-emerald-400">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        IS 456:2000 &bull; NBC 2016 &bull; RERA 2016 &bull; CoA 1989
+      </span>
+      <span id="clockReadout" class="hidden md:inline text-gray-400">IST SITE LOG</span>
+    </div>
+  </div>
+
+  <!-- MAIN HEADER -->
+  <header class="sticky top-0 z-30 bg-[#111214]/95 backdrop-blur-md border-b border-borderconcrete">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        
+        <!-- Brand Identity -->
+        <div class="flex items-start sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-lg bg-ochre/20 border border-ochre flex items-center justify-center text-ochrelight font-display font-bold text-xl shrink-0 shadow-inner">
+              स्थ
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h1 class="font-display font-bold text-xl sm:text-2xl tracking-tight text-white">STHAPATI</h1>
+                <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-ochre/20 text-ochrelight border border-ochre/40 font-semibold">Field Manual</span>
+              </div>
+              <p class="text-xs text-gray-400">Tactical Decision Matrix &amp; Statutory Compendium for Self-Reliant Indian Architects</p>
+            </div>
+          </div>
+
+          <button id="openNoteModalBtnMobile" class="lg:hidden inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-ochre hover:bg-ochrelight text-white font-medium text-xs transition shrink-0">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span>Log Note</span>
+          </button>
+        </div>
+
+        <!-- Primary Mode Switcher Tabs -->
+        <nav class="flex items-center gap-1.5 bg-[#0C0D0F] p-1.5 rounded-xl border border-borderconcrete overflow-x-auto" aria-label="Main Navigation">
+          <button data-view="compendium" class="view-tab-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium transition whitespace-nowrap bg-ochre text-white shadow">
+            <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+            <span>Field Compendium</span>
+            <span id="navCountBadge" class="px-1.5 py-0.2 bg-black/30 rounded text-[10px] font-mono">12</span>
+          </button>
+          <button data-view="calculators" class="view-tab-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium transition whitespace-nowrap text-gray-400 hover:text-white hover:bg-white/5">
+            <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+            <span>IS / NBC Calculators</span>
+          </button>
+          <button data-view="wizard" class="view-tab-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium transition whitespace-nowrap text-gray-400 hover:text-white hover:bg-white/5">
+            <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+            <span>Site Dilemma Triage</span>
+          </button>
+          <button data-view="logbook" class="view-tab-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium transition whitespace-nowrap text-gray-400 hover:text-white hover:bg-white/5">
+            <i data-lucide="clipboard-list" class="w-3.5 h-3.5"></i>
+            <span>Site Logbook</span>
+            <span id="customNotesCountBadge" class="px-1.5 py-0.2 bg-white/10 rounded text-[10px] font-mono">0</span>
+          </button>
+        </nav>
+
+        <!-- Action Buttons Desktop -->
+        <div class="hidden lg:flex items-center gap-2">
+          <button id="openNoteModalBtn" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-ochre hover:bg-ochrelight text-white font-medium text-xs transition shadow-sm">
+            <i data-lucide="file-plus-2" class="w-4 h-4"></i>
+            <span>+ Add Field Entry</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WORKSPACE -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+
+    <!-- ========================================== -->
+    <!-- VIEW 1: FIELD COMPENDIUM DATABASE          -->
+    <!-- ========================================== -->
+    <section id="view-compendium" class="space-y-6">
+      
+      <!-- KPI / Quick Overview Banner -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="tectonic-card rounded-xl p-3.5 flex items-center justify-between">
+          <div>
+            <p class="text-[11px] font-mono uppercase text-gray-400">Practice Pillars</p>
+            <p class="text-xl font-display font-bold text-white mt-0.5">6 Core Domains</p>
+            <p class="text-[11px] text-gray-400 mt-0.5">Decision &bull; Field &bull; Codes</p>
+          </div>
+          <div class="w-9 h-9 rounded-lg bg-ochre/15 border border-ochre/30 flex items-center justify-center text-ochrelight">
+            <i data-lucide="layers" class="w-4 h-4"></i>
+          </div>
+        </div>
+        <div class="tectonic-card rounded-xl p-3.5 flex items-center justify-between">
+          <div>
+            <p class="text-[11px] font-mono uppercase text-gray-400">Codal Clauses</p>
+            <p class="text-xl font-display font-bold text-white mt-0.5">BIS / NBC / RERA</p>
+            <p class="text-[11px] text-emerald-400 mt-0.5">Verified Clause Links</p>
+          </div>
+          <div class="w-9 h-9 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+            <i data-lucide="scale" class="w-4 h-4"></i>
+          </div>
+        </div>
+        <div class="tectonic-card rounded-xl p-3.5 flex items-center justify-between">
+          <div>
+            <p class="text-[11px] font-mono uppercase text-gray-400">Checklist Progress</p>
+            <p id="kpiChecklistProgress" class="text-xl font-display font-bold text-white mt-0.5">0 / 48 Steps</p>
+            <p class="text-[11px] text-amber-400 mt-0.5">Interactive Site Verification</p>
+          </div>
+          <div class="w-9 h-9 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400">
+            <i data-lucide="check-square" class="w-4 h-4"></i>
+          </div>
+        </div>
+        <div class="tectonic-card rounded-xl p-3.5 flex items-center justify-between">
+          <div>
+            <p class="text-[11px] font-mono uppercase text-gray-400">Saved Bookmarks</p>
+            <p id="kpiBookmarksCount" class="text-xl font-display font-bold text-white mt-0.5">0 Pinned</p>
+            <p class="text-[11px] text-sky-400 mt-0.5">Quick Site Reference</p>
+          </div>
+          <div class="w-9 h-9 rounded-lg bg-sky-500/15 border border-sky-500/30 flex items-center justify-center text-sky-400">
+            <i data-lucide="bookmark" class="w-4 h-4"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search, Pillar Filter & Severity Controls -->
+      <div class="tectonic-card rounded-xl p-4 space-y-4">
+        <div class="flex flex-col md:flex-row gap-3">
+          <!-- Omni Search -->
+          <div class="relative flex-1">
+            <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input
+              id="searchInput"
+              type="text"
+              placeholder="Search by dilemma, IS 456, NBC Part 4, RERA 2(k), AAC block, stripping time, honeycombing, mistri..."
+              class="w-full bg-[#0E1013] border border-borderconcrete focus:border-ochre rounded-lg pl-10 pr-9 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none transition"
+            />
+            <button id="clearSearchBtn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white" title="Clear search">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Severity Filter -->
+          <div class="flex items-center gap-2">
+            <select id="severitySelect" aria-label="Filter by Severity" class="bg-[#0E1013] border border-borderconcrete focus:border-ochre rounded-lg px-3 py-2.5 text-xs font-mono text-gray-200 focus:outline-none">
+              <option value="all">ALL SEVERITIES</option>
+              <option value="critical">CRITICAL LIABILITY</option>
+              <option value="high">HIGH SITE RISK</option>
+              <option value="standard">STANDARD PRACTICE</option>
+            </select>
+
+            <!-- Bookmarks Toggle -->
+            <button id="bookmarkFilterBtn" class="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-lg border border-borderconcrete bg-[#0E1013] hover:border-gray-500 text-xs font-mono text-gray-300 transition shrink-0">
+              <i data-lucide="bookmark" class="w-3.5 h-3.5"></i>
+              <span>Pinned Only</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 6 Core Pillar Pills -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1" id="pillarFilterContainer">
+          <button data-pillar="all" class="pillar-pill px-3 py-1.5 rounded-lg text-xs font-medium bg-ochre text-white border border-ochre transition whitespace-nowrap">
+            All Pillars (12)
+          </button>
+          <button data-pillar="decision" class="pillar-pill px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0E1013] text-gray-300 border border-borderconcrete hover:border-gray-500 transition whitespace-nowrap">
+            01. Decision Making
+          </button>
+          <button data-pillar="critical" class="pillar-pill px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0E1013] text-gray-300 border border-borderconcrete hover:border-gray-500 transition whitespace-nowrap">
+            02. Critical Thinking
+          </button>
+          <button data-pillar="material" class="pillar-pill px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0E1013] text-gray-300 border border-borderconcrete hover:border-gray-500 transition whitespace-nowrap">
+            03. Material Relevance
+          </button>
+          <button data-pillar="field" class="pillar-pill px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0E1013] text-gray-300 border border-borderconcrete hover:border-gray-500 transition whitespace-nowrap">
+            04. Field Knowledge
+          </button>
+          <button data-pillar="people" class="pillar-pill px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0E1013] text-gray-300 border border-borderconcrete hover:border-gray-500 transition whitespace-nowrap">
+            05. People Management
+          </button>
+          <button data-pillar="evolution" class="pillar-pill px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0E1013] text-gray-300 border border-borderconcrete hover:border-gray-500 transition whitespace-nowrap">
+            06. Practice Evolution
+          </button>
+        </div>
+      </div>
+
+      <!-- Active Filter Bar -->
+      <div class="flex items-center justify-between text-xs text-gray-400 px-1">
+        <span id="resultsStatusText">Showing all 12 verified field scenarios</span>
+        <button id="resetAllFiltersBtn" class="text-ochrelight hover:underline font-mono hidden">Reset Filters</button>
+      </div>
+
+      <!-- Cards Grid -->
+      <div id="cardsGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-4"></div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 2: CODAL CALCULATORS & QUICK TABLES   -->
+    <!-- ========================================== -->
+    <section id="view-calculators" class="hidden space-y-6">
+      <div class="tectonic-card rounded-xl p-5 border-l-4 border-l-ochre">
+        <h2 class="text-lg font-display font-bold text-white">IS 456:2000, NBC 2016 &amp; IS 2185 On-Site Calculators</h2>
+        <p class="text-xs text-gray-400 mt-1">Verify contractor claims on the spot using statutory clauses from BIS IS 456:2000, NBC 2016 Part 4, and IS 2185 (Part 3):2005.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- CALCULATOR 1: IS 456 Formwork Stripping, Cover & Cube Sampling -->
+        <div class="tectonic-card rounded-xl p-5 space-y-5">
+          <div class="flex items-center justify-between border-b border-borderconcrete pb-3">
+            <div>
+              <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-ochre/20 text-ochrelight border border-ochre/30">IS 456:2000 Cl. 11.3, 15.2 &amp; Table 16</span>
+              <h3 class="text-base font-display font-bold text-white mt-1.5">RCC De-Shuttering, Cube Sampling &amp; Nominal Cover</h3>
+            </div>
+            <i data-lucide="hard-hat" class="w-5 h-5 text-ochrelight"></i>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label for="calcMemberSelect" class="block text-xs font-mono text-gray-300 mb-1.5">1. Structural Element &amp; Span (IS 456 Clause 11.3.1)</label>
+              <select id="calcMemberSelect" class="w-full bg-[#0E1013] border border-borderconcrete rounded-lg px-3 py-2.5 text-sm text-white focus:border-ochre focus:outline-none">
+                <option value="vertical">Vertical formwork to columns, walls &amp; beams</option>
+                <option value="slab_soffit">Soffit formwork to slabs (Props refixed immediately)</option>
+                <option value="beam_soffit">Soffit formwork to beams (Props refixed immediately)</option>
+                <option value="slab_props_short" selected>Props to slabs spanning up to 4.5 m</option>
+                <option value="slab_props_long">Props to slabs spanning over 4.5 m</option>
+                <option value="beam_props_short">Props to beams &amp; arches spanning up to 6.0 m</option>
+                <option value="beam_props_long">Props to beams &amp; arches spanning over 6.0 m</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="calcCementSelect" class="block text-xs font-mono text-gray-300 mb-1.5">2. Cement Type Used</label>
+                <select id="calcCementSelect" class="w-full bg-[#0E1013] border border-borderconcrete rounded-lg px-3 py-2.5 text-sm text-white focus:border-ochre focus:outline-none">
+                  <option value="opc">OPC (Ordinary Portland Cement)</option>
+                  <option value="ppc">PPC / Fly-Ash Blended Cement</option>
+                </select>
+              </div>
+              <div>
+                <label for="calcExposureSelect" class="block text-xs font-mono text-gray-300 mb-1.5">3. Exposure Condition (Table 16)</label>
+                <select id="calcExposureSelect" class="w-full bg-[#0E1013] border border-borderconcrete rounded-lg px-3 py-2.5 text-sm text-white focus:border-ochre focus:outline-none">
+                  <option value="mild">Mild (20 mm base cover)</option>
+                  <option value="moderate" selected>Moderate — Urban Sheltered Rain (30 mm)</option>
+                  <option value="severe">Severe — Coastal / Alternate Wet-Dry (45 mm)</option>
+                  <option value="very_severe">Very Severe — Sea Spray / Fumes (50 mm)</option>
+                  <option value="extreme">Extreme — Tidal Zone (75 mm)</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-mono mb-1">
+                <label for="calcPourVolume">4. Concrete Pour Volume (IS 456 Cl. 15.2.2)</label>
+                <span id="calcPourVolumeLabel" class="text-ochrelight font-bold">35 m³</span>
+              </div>
+              <input id="calcPourVolume" type="range" min="1" max="200" value="35" class="w-full accent-ochre cursor-pointer" />
+              <div class="flex justify-between text-[10px] font-mono text-gray-500 mt-0.5">
+                <span>1 m³ (Small pour)</span>
+                <span>50 m³ (Medium slab)</span>
+                <span>200 m³ (Raft / Podium)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Output Readout Box -->
+          <div class="bg-[#0C0D0F] border border-borderconcrete rounded-xl p-4 space-y-3">
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="p-2.5 rounded-lg bg-[#14161A] border border-borderconcrete">
+                <p class="text-[10px] font-mono text-gray-400 uppercase">Min Stripping Time</p>
+                <p id="outStrippingTime" class="text-lg font-display font-bold text-ochrelight mt-1">7 Days</p>
+              </div>
+              <div class="p-2.5 rounded-lg bg-[#14161A] border border-borderconcrete">
+                <p class="text-[10px] font-mono text-gray-400 uppercase">Cube Samples (150mm)</p>
+                <p id="outCubeSamples" class="text-lg font-display font-bold text-emerald-400 mt-1">4 Sets (12 Cubes)</p>
+              </div>
+              <div class="p-2.5 rounded-lg bg-[#14161A] border border-borderconcrete">
+                <p class="text-[10px] font-mono text-gray-400 uppercase">Min Nominal Cover</p>
+                <p id="outNominalCover" class="text-lg font-display font-bold text-sky-400 mt-1">30 mm</p>
+              </div>
+            </div>
+            <p id="outRccAdvisory" class="text-xs text-gray-300 leading-relaxed font-mono bg-white/5 p-2.5 rounded border border-white/10"></p>
+          </div>
+        </div>
+
+        <!-- CALCULATOR 2: NBC 2016 Fire Egress & IS 2185 Part 3 AAC Block Estimator -->
+        <div class="tectonic-card rounded-xl p-5 space-y-5">
+          <div class="flex items-center justify-between border-b border-borderconcrete pb-3">
+            <div>
+              <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 border border-sky-500/30">NBC 2016 Part 4 &amp; IS 2185 (Part 3)</span>
+              <h3 class="text-base font-display font-bold text-white mt-1.5">Fire Stair Egress Audit &amp; AAC Blockwork Estimator</h3>
+            </div>
+            <i data-lucide="Compass" class="w-5 h-5 text-sky-400"></i>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label for="calcOccupancySelect" class="block text-xs font-mono text-gray-300 mb-1.5">1. Building Occupancy Classification (NBC 2016 Part 4)</label>
+              <select id="calcOccupancySelect" class="w-full bg-[#0E1013] border border-borderconcrete rounded-lg px-3 py-2.5 text-sm text-white focus:border-ochre focus:outline-none">
+                <option value="residential">Group A: Residential Dwelling / Apartment</option>
+                <option value="business" selected>Group B / E / F: Educational, Business or Mercantile</option>
+                <option value="institutional">Group C / D: Institutional (Hospital) or Assembly</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="calcAacThickness" class="block text-xs font-mono text-gray-300 mb-1.5">2. AAC Block Thickness (600&times;200 mm)</label>
+                <select id="calcAacThickness" class="w-full bg-[#0E1013] border border-borderconcrete rounded-lg px-3 py-2.5 text-sm text-white focus:border-ochre focus:outline-none">
+                  <option value="100">100 mm Partition (83 blocks/m³)</option>
+                  <option value="150">150 mm Internal Wall (56 blocks/m³)</option>
+                  <option value="200" selected>200 mm External Wall (42 blocks/m³)</option>
+                  <option value="230">230 mm Full Wall (36 blocks/m³)</option>
+                  <option value="250">250 mm Heavy Thermal Wall (33 blocks/m³)</option>
+                </select>
+              </div>
+              <div>
+                <label for="calcWallArea" class="block text-xs font-mono text-gray-300 mb-1.5">3. Net Masonry Wall Area (m²)</label>
+                <input id="calcWallArea" type="number" min="1" max="10000" value="120" class="w-full bg-[#0E1013] border border-borderconcrete rounded-lg px-3 py-2 text-sm text-white focus:border-ochre focus:outline-none font-mono" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Output Readout Box -->
+          <div class="bg-[#0C0D0F] border border-borderconcrete rounded-xl p-4 space-y-3">
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="p-2.5 rounded-lg bg-[#14161A] border border-borderconcrete">
+                <p class="text-[10px] font-mono text-gray-400 uppercase">Min Stair Width</p>
+                <p id="outStairWidth" class="text-lg font-display font-bold text-amber-400 mt-1">1.50 m</p>
+              </div>
+              <div class="p-2.5 rounded-lg bg-[#14161A] border border-borderconcrete">
+                <p class="text-[10px] font-mono text-gray-400 uppercase">Total AAC Blocks</p>
+                <p id="outAacCount" class="text-lg font-display font-bold text-white mt-1">1,000 Nos</p>
+              </div>
+              <div class="p-2.5 rounded-lg bg-[#14161A] border border-borderconcrete">
+                <p class="text-[10px] font-mono text-gray-400 uppercase">Dry Block Weight</p>
+                <p id="outAacWeight" class="text-lg font-display font-bold text-emerald-400 mt-1">13.2–15.6 kg</p>
+              </div>
+            </div>
+            <p id="outNbcAacAdvisory" class="text-xs text-gray-300 leading-relaxed font-mono bg-white/5 p-2.5 rounded border border-white/10"></p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 3: SITE DILEMMA TRIAGE WIZARD         -->
+    <!-- ========================================== -->
+    <section id="view-wizard" class="hidden space-y-6">
+      <div class="tectonic-card rounded-xl p-5 border-l-4 border-l-amber-500">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">Interactive Diagnostic Engine</span>
+            <h2 class="text-lg font-display font-bold text-white mt-1">Live Site Crisis &amp; Liability Triage Wizard</h2>
+            <p class="text-xs text-gray-400">Select an active site conflict below to generate the statutory stop-work protocol, codal defence, and ready-to-send WhatsApp instruction.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left Column: Crisis Selector -->
+        <div class="lg:col-span-5 space-y-2.5" id="wizardSelectorList"></div>
+
+        <!-- Right Column: Triage Output Panel -->
+        <div class="lg:col-span-7">
+          <div id="wizardOutputPanel" class="tectonic-card rounded-xl p-5 space-y-5 sticky top-24"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 4: CUSTOM SITE LOGBOOK                -->
+    <!-- ========================================== -->
+    <section id="view-logbook" class="hidden space-y-6">
+      <div class="tectonic-card rounded-xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-display font-bold text-white">Personal Site Observation Logbook</h2>
+          <p class="text-xs text-gray-400 mt-0.5">Document project-specific field lessons, vendor rates, and municipal interpretations. Saved locally in your browser and integrated into your main compendium search.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="openNoteModalBtnFromLog" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-ochre hover:bg-ochrelight text-white text-xs font-medium transition">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>New Site Log Entry</span>
+          </button>
+          <button id="exportLogsBtn" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-[#0E1013] border border-borderconcrete hover:border-gray-500 text-gray-200 text-xs font-mono transition">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Export JSON</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="customLogsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    </section>
+
+  </main>
+
+  <!-- ADD FIELD ENTRY MODAL -->
+  <div id="noteModal" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="tectonic-card rounded-2xl max-w-xl w-full p-6 space-y-4 border border-gray-600 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-borderconcrete pb-3">
+        <div>
+          <span class="text-[10px] font-mono uppercase text-ochrelight">Field Knowledge Capture</span>
+          <h3 class="text-lg font-display font-bold text-white">Add Custom Site Compendium Entry</h3>
+        </div>
+        <button id="closeNoteModalBtn" class="text-gray-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="noteForm" class="space-y-3.5">
+        <div>
+          <label for="noteTitle" class="block text-xs font-mono text-gray-300 mb-1">Scenario / Observation Title *</label>
+          <input id="noteTitle" type="text" required placeholder="e.g., Post-Monsoon Terrace Brick Bat Coba Hairline Cracks" class="w-full bg-[#0E1013] border border-borderconcrete rounded-lg px-3 py-2 text-sm text-white focus:border-ochre focus:outline-none" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="notePillar" class="block text-xs font-mono text-gray-300 mb-1">Practice Pillar *</label>
+            <select id="notePillar" class="w-full bg-[#0E1013] border border-borderconcrete rounded-lg px-3 py-2 text-sm text-white focus:border-ochre focus:outline-none">
+              <option value="field">04. Field Knowledge</option>
+              <option value="decision">01. Decision Making</option>
+              <option value="critical">02. Critical Thinking</option>
+              <option value="material">03. Material Relevance</option>
+              <option value="people">05. People Management</option>
+              <option value="evolution">06. Practice Evolution</option>
+            </select>
+          </div>
+          <div>
+            <label for="noteSeverity" class="block text-xs font-mono text-gray-300 mb-1">Risk / Liability Level *</label>
+            <select id="noteSeverity" class="w-full bg-[#0E1013] border border-borderconcrete rounded-lg px-3 py-2 text-sm text-white focus:border-ochre focus:outline-none">
+              <option value="high">High Site Risk</option>
+              <option value="critical">Critical Liability</option>
+              <option value="standard">Standard Practice</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="noteCode" class="block text-xs font-mono text-gray-300 mb-1">Governing Code / Bylaw Clause *</label>
+            <input id="noteCode" type="text" required placeholder="e.g., IS 3067 / NBC 2016 Part 6" class="w-full bg-[#0E1013] border border-borderconcrete rounded-lg px-3 py-2 text-sm text-white focus:border-ochre focus:outline-none font-mono" />
+          </div>
+          <div>
+            <label for="noteProject" class="block text-xs font-mono text-gray-300 mb-1">Project / City Context</label>
+            <input id="noteProject" type="text" placeholder="e.g., G+7 Residential, Chennai / Mumbai" class="w-full bg-[#0E1013] border border-borderconcrete rounded-lg px-3 py-2 text-sm text-white focus:border-ochre focus:outline-none" />
+          </div>
+        </div>
+
+        <div>
+          <label for="noteDilemma" class="block text-xs font-mono text-gray-300 mb-1">Site Dilemma &amp; Technical Cause *</label>
+          <textarea id="noteDilemma" rows="2" required placeholder="Describe what happened on site and why it occurs..." class="w-full bg-[#0E1013] border border-borderconcrete rounded-lg px-3 py-2 text-sm text-white focus:border-ochre focus:outline-none"></textarea>
+        </div>
+
+        <div>
+          <label for="noteProtocol" class="block text-xs font-mono text-gray-300 mb-1">Action Protocol Checklist (One step per line) *</label>
+          <textarea id="noteProtocol" rows="3" required placeholder="Order 72-hour ponding test with 150mm water head&#10;Verify 1:1.5:3 waterproof mortar fillet (chamfer) at parapet junction&#10;Record photographic sign-off before tile laying" class="w-full bg-[#0E1013] border border-borderconcrete rounded-lg px-3 py-2 text-sm text-white focus:border-ochre focus:outline-none"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-borderconcrete">
+          <button type="button" id="cancelNoteModalBtn" class="px-4 py-2 rounded-lg border border-borderconcrete text-xs text-gray-300 hover:text-white">Cancel</button>
+          <button type="submit" class="px-4 py-2 rounded-lg bg-ochre hover:bg-ochrelight text-white text-xs font-semibold">Save to Compendium</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastBox" class="fixed bottom-5 right-5 z-50 hidden bg-[#181A1E] border border-ochre text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs font-mono">
+    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+    <span id="toastMessage">Copied to clipboard</span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-borderconcrete bg-[#0B0C0E] py-4 px-4 sm:px-6 mt-10">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500 font-mono">
+      <div>STHAPATI — Open-Source Tactical Compendium for Young Indian Architects</div>
+      <div class="flex items-center gap-4">
+        <a href="https://infralens.in/code/IS-456-2000" target="_blank" rel="noopener noreferrer" class="hover:text-ochrelight underline">IS 456:2000 Ref</a>
+        <a href="https://infralens.in/knowledge/nbc-2016-part-4-fire-safety" target="_blank" rel="noopener noreferrer" class="hover:text-ochrelight underline">NBC 2016 Part 4</a>
+        <a href="https://indiankanoon.org/doc/47417973/" target="_blank" rel="noopener noreferrer" class="hover:text-ochrelight underline">RERA Sec 2(k)</a>
+        <a href="https://coa.gov.in/index1.php?lang=1&level=1&sublinkid=271&lid=250" target="_blank" rel="noopener noreferrer" class="hover:text-ochrelight underline">CoA Conduct 1989</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- APPLICATION LOGIC -->
+  <script>
+    // =========================================================
+    // 1. VERIFIED COMPENDIUM DATA (GROUNDED IN BIS/NBC/RERA/CoA)
+    // =========================================================
+    const INITIAL_SCENARIOS = [
+      {
+        id: 'sc-01',
+        pillar: 'field',
+        pillarLabel: '04. Field Knowledge',
+        severity: 'critical',
+        title: 'Premature Slab & Beam De-Shuttering Pressure by Contractor',
+        code: 'IS 456:2000 Clause 11.3.1',
+        codeUrl: 'https://thecivilstudies.com/shuttering-removal-time-is-456/',
+        context: 'Multi-storey RCC frame site; centering contractor demands stripping 5.2 m span slab props at Day 5 to reuse plates on upper floor.',
+        dilemma: 'Removing props before concrete reaches at least twice the stress to which it is subjected causes immediate plastic creep, long-term sagging, and micro-cracking. Under IS 456:2000 Clause 11.3.1 (for OPC in normal ambient temperatures), slab soffit formwork may be removed at 3 days ONLY if props are refixed immediately; props for slabs spanning over 4.5 m must remain for 14 days (7 days for spans up to 4.5 m).',
+        protocol: [
+          'Verify effective span on GFC structural drawing: for spans > 4.5 m, enforce minimum 14-day prop retention (21 days for beams/arches > 6 m).',
+          'Check cement batch delivery challan: if PPC or fly-ash blended cement was used instead of OPC, extend stripping period or demand field-cured cube crushing test first.',
+          'Permit drop-head soffit ply removal at Day 3 only if vertical steel props are re-tightened immediately without disturbing load transfer.',
+          'Issue written stop-work instruction in site register if props are loosened without cube strength verification.'
+        ],
+        momTemplate: 'SITE INSTRUCTION [IS 456:2000 Cl. 11.3.1]: De-shuttering of props for Slab (>4.5m span) is strictly prohibited before 14 days from pour date (or verified field-cured cube test showing concrete strength >= 2x induced stress). Soffit ply may only be stripped if props are immediately re-fixed.'
+      },
+      {
+        id: 'sc-02',
+        pillar: 'decision',
+        pillarLabel: '01. Decision Making',
+        severity: 'critical',
+        title: 'Developer Pressure to Include Balcony & Shafts in RERA Carpet Area',
+        code: 'RERA Act 2016 Section 2(k)',
+        codeUrl: 'https://indiankanoon.org/doc/47417973/',
+        context: 'Residential apartment sales brochure vs. statutory RERA architect certificate sign-off.',
+        dilemma: 'Sales teams often pressure the project architect to inflate salable carpet area by merging flower beds, dry balconies, or external peripheral wall thicknesses into the Carpet Area statement. Under Section 2(k) of the Real Estate (Regulation and Development) Act, 2016, Carpet Area is strictly the net usable floor area within the apartment, including internal partition walls, but excluding external walls, service shafts, exclusive balconies/verandahs, and open terraces.',
+        protocol: [
+          'Create two separate CAD polylines on approval drawings: (a) Net RERA Carpet Area including internal partition walls, and (b) Exclusive Balcony/Verandah & Terrace areas listed as separate line items.',
+          'Exclude all external peripheral masonry/RCC walls and plumbing/fire service shafts from the Section 2(k) calculation.',
+          'Cross-check that any brick/AAC wall thickness changes on site do not reduce net usable area beyond the statutory RERA tolerance.',
+          'Attach an explicit RERA Section 2(k) boundary schedule to the Architect Certificate (Form 1) before signing.'
+        ],
+        momTemplate: 'STATUTORY NOTE [RERA Act 2016 Sec 2(k)]: Certified RERA Carpet Area strictly includes net usable floor area + internal partition walls only. External walls, service shafts, exclusive balconies, and open terraces are excluded and listed separately per statutory mandate.'
+      },
+      {
+        id: 'sc-03',
+        pillar: 'field',
+        pillarLabel: '04. Field Knowledge',
+        severity: 'high',
+        title: 'Coastal & Urban Corrosion: Missing Cover Blocks in Slabs, Beams & Footings',
+        code: 'IS 456:2000 Cl. 26.4 & Table 16',
+        codeUrl: 'https://sitesetu.app/resources/glossary/clear-cover',
+        context: 'Pre-pour steel inspection in coastal/humid Tier-1 zones (Mumbai/Chennai) where broken tile pieces are used instead of PVC/mortar cover blocks.',
+        dilemma: 'Inadequate clear cover leads to rapid carbonation and chloride-induced spalling of RCC members. Per IS 456:2000 Table 16, minimum nominal cover is 20 mm (Mild), 30 mm (Moderate), 45 mm (Severe), 50 mm (Very Severe), and 75 mm (Extreme). Additionally, footings require at least 50 mm cover, longitudinal column bars require at least 40 mm (25 mm only if column <= 200 mm with <= 12 mm bars), and cover can never be less than the main bar diameter.',
+        protocol: [
+          'Reject broken brick bats or kadappa stone shims under reinforcement cages; mandate factory-made high-strength mortar or heavy-duty PVC cover blocks.',
+          'Verify exposure class on structural notes: enforce 45 mm (Severe) or 50 mm (Very Severe) nominal cover in coastal zones like Mumbai or Chennai.',
+          'Check bar diameter rule: if a beam uses 32 mm main bars in Moderate exposure (30 mm Table 16), increase nominal cover to at least 32 mm.',
+          'Check fire resistance cover under IS 456 Table 16A for multi-storey continuous beams and columns.'
+        ],
+        momTemplate: 'PRE-POUR HOLD [IS 456:2000 Cl. 26.4 & Table 16]: Concrete pour held until certified cover blocks are tied across all cages (Footings: min 50mm; Columns: min 40mm; Exposure adjustment per Table 16). Loose stone/tile shims must be removed immediately.'
+      },
+      {
+        id: 'sc-04',
+        pillar: 'critical',
+        pillarLabel: '02. Critical Thinking',
+        severity: 'critical',
+        title: 'Core-Cut Request Through Primary RCC Beam for HVAC / Plumbing Sleeve',
+        code: 'IS 456:2000 Cl. 35.3 & NBC Part 6',
+        codeUrl: 'https://infralens.in/code/IS-456-2000',
+        context: 'MEP contractor arrives with diamond core-cutter after slab casting to drill a 150 mm drain/refrigerant sleeve through a primary floor beam.',
+        dilemma: 'Unplanned core-cutting near beam supports (high shear zone) or bottom tension zone severs main longitudinal bars or stirrups, risking catastrophic shear failure or exceeding the 0.3 mm surface crack width limit under IS 456 Clause 35.3.2.',
+        protocol: [
+          'Issue an immediate halt to core drilling until the exact penetration coordinates are mapped against the bar bending schedule (BBS).',
+          'Never permit penetrations within 2d (twice effective depth) from the column face (critical shear zone) or through bottom tension rebar.',
+          'If penetration in the neutral axis mid-span web is structurally cleared in writing by the Structural Consultant, use a rebar scanner/ferroscan before drilling.',
+          'Evaluate alternative routing: drop false ceiling soffit locally by 150 mm or route sleeves through non-structural dry shafts.'
+        ],
+        momTemplate: 'STOP WORK NOTICE [STRUCTURAL INTEGRITY]: Zero core-cutting is permitted in RCC beams/shear walls without written Structural Consultant clearance, BBS verification, and rebar ferroscan markup. Route MEP line below beam soffit in ceiling plenum unless cleared.'
+      },
+      {
+        id: 'sc-05',
+        pillar: 'material',
+        pillarLabel: '03. Material Relevance',
+        severity: 'standard',
+        title: 'AAC Blockwork Shrinkage Cracks vs. Red Clay Brick Specification',
+        code: 'IS 2185 (Part 3):2005',
+        codeUrl: 'https://desimachines.com/building-materials-guide/aac-blocks/',
+        context: 'High-rise infill masonry specification and site QA where diagonal plaster cracks appear around window corners and beam soffits.',
+        dilemma: 'Autoclaved Aerated Concrete (AAC) blocks reduce dead load (dry density 551–650 kg/m³, oven-dry weight 13.2–15.6 kg for 600×200×200 mm blocks; 42 blocks/m³ or 8.33 blocks/m²) compared to clay bricks, and IS 2185 (Part 3) limits drying shrinkage to 0.06% with compressive strength from 2.0 to 7.0 N/mm². However, laying wet blocks right after factory autoclaving or skipping RCC stiffener bands triggers shrinkage and shear cracking.',
+        protocol: [
+          'Check block moisture on delivery: do not lay soaking-wet blocks; use polymer-modified thin-bed jointing mortar (3 mm) instead of thick 15 mm conventional sand-cement beds.',
+          'Introduce a 75–100 mm thick RCC patli (sill/lintel runner band) with 2 Nos 8 mm bars every 1.2 m height in 100 mm / 150 mm partitions.',
+          'Leave a 15–20 mm gap below the RCC beam soffit during block laying and pack it 7 days later with non-shrink mortar or PU foam to prevent beam deflection transfer.',
+          'Fix alkali-resistant glass fiber mesh (150 mm overlap) across all RCC-to-AAC junctions before plastering.'
+        ],
+        momTemplate: 'QUALITY DIRECTIVE [IS 2185 Part 3]: For all AAC block masonry (8.33 blocks/sqm), maintain 3mm thin-bed polymer mortar, provide horizontal RCC bond beam at sill/lintel levels, and fix 150mm fiberglass mesh at all RCC-masonry junctions prior to plaster.'
+      },
+      {
+        id: 'sc-06',
+        pillar: 'field',
+        pillarLabel: '04. Field Knowledge',
+        severity: 'high',
+        title: 'RMC Transit Mixer Slump Manipulation & Inadequate Cube Sampling',
+        code: 'IS 456:2000 Cl. 15.2.2 & Cl. 16.1',
+        codeUrl: 'https://www.gtsmtestinglabs.in/post/m25-cube-test-result-23-mpa-pass-or-fail-is-456',
+        context: 'Ready-Mix Concrete (RMC) pour on an urban site where site labour adds unmeasured water via hosepipe to ease pumpability.',
+        dilemma: 'Adding water on site spikes the water-cement ratio above IS 456 Table 5 limits (0.40–0.55), slashing 28-day compressive strength. Furthermore, contractors often cast only 1 set of cubes for an entire 45 m³ slab pour, violating IS 456 Clause 15.2.2 sampling frequency.',
+        protocol: [
+          'Enforce IS 456 Clause 15.2.2 cube sampling frequency strictly: 1–5 m³ = 1 sample; 6–15 m³ = 2 samples; 16–30 m³ = 3 samples; 31–50 m³ = 4 samples; >50 m³ = 4 + 1 sample per additional 50 m³ (each sample = 3 cubes of 150 mm for 28-day testing).',
+          'Check batching timestamp on RMC delivery challan and perform slump cone test on arrival; if slump has dropped, dose only approved superplasticizer admixture—never raw water.',
+          'Label cube moulds with pour date, member ID, grade (e.g., M25/M30), and transit mixer batch number.',
+          'Verify acceptance criteria at 28 days per IS 456 Clause 16.1 (both mean of 4 non-overlapping consecutive results and individual sample limits).'
+        ],
+        momTemplate: 'RMC QA MANDATE [IS 456:2000 Cl. 15.2.2]: Zero raw water addition permitted into RMC transit mixers. Cast mandatory 150mm cube samples per Cl. 15.2.2 (e.g., 4 samples = 12 cubes for 31–50 m³ pour) and log batch numbers in site cube register.'
+      },
+      {
+        id: 'sc-07',
+        pillar: 'evolution',
+        pillarLabel: '06. Practice Evolution',
+        severity: 'critical',
+        title: 'Multi-Storey Staircase Width & Fire Door Compliance Audit',
+        code: 'NBC 2016 Part 4 (Fire & Life Safety)',
+        codeUrl: 'https://www.securedengineers.com/architects/checklists/nbc-fire-life-safety/',
+        context: 'Schematic layout review where developer asks to squeeze fire staircase clear width to 1.1 m in a commercial/institutional building to gain leasable floor plate.',
+        dilemma: 'Compromising fire egress width results in Chief Fire Officer (CFO) NOC rejection and severe life-safety liability. Under NBC 2016 Part 4, minimum clear staircase width is 1.0 m for residential, 1.5 m for business, mercantile, educational, and industrial buildings, and 2.0 m for assembly and institutional (hospital) buildings, with travel distance capped at 22.5–30 m by occupancy.',
+        protocol: [
+          'Lock minimum clear staircase width in schematic grid: 1.0 m (Residential), 1.5 m (Business/Mercantile/Educational), or 2.0 m (Institutional/Assembly) measured clear of handrails.',
+          'Provide at least two independent remote exit staircases for multi-storey buildings exceeding NBC Part 4 height/floor thresholds.',
+          'Ensure access to the exit staircase is through a certified fire door of minimum 120-minute fire resistance rating opening in the direction of egress.',
+          'Verify maximum floor travel distance (22.5 m to 30 m) from the remotest corner of the floor plate to the fire door.'
+        ],
+        momTemplate: 'DESIGN COMPLIANCE [NBC 2016 Part 4]: Staircase clear width locked at statutory minimum (1.0m Residential / 1.5m Business-Educational / 2.0m Institutional-Assembly) with 120-min rated fire doors swinging in direction of egress and max travel distance within 22.5–30m.'
+      },
+      {
+        id: 'sc-08',
+        pillar: 'people',
+        pillarLabel: '05. People Management',
+        severity: 'critical',
+        title: 'Vendor Kickback / Commission Offer & Fee Scale Defense',
+        code: 'CoA Professional Conduct Reg. 1989, Reg. 2(1)',
+        codeUrl: 'https://coa.gov.in/showfile.php?lang=1&level=1&sublinkid=208&lid=152',
+        context: 'Tile/sanitaryware dealer offers the young architect a 10% "architect commission" while the client simultaneously asks for a cut-rate lump-sum design fee.',
+        dilemma: 'Accepting secret vendor commissions destroys site authority—once a vendor or contractor pays a cut, the architect loses the moral and legal standing to reject defective batches on site. Furthermore, Regulation 2(1) of the Architects (Professional Conduct) Regulations, 1989 explicitly prohibits giving or taking discounts, commissions, gifts, or other inducements for the introduction of clients or work.',
+        protocol: [
+          'Instruct all shortlisted vendors in writing to pass 100% of trade/dealer discounts directly onto the client’s tax invoice.',
+          'Anchor your fee proposal in the Council of Architecture (CoA) Scale of Charges (e.g., 7.5% minimum standard reference for individual residential houses, negotiable up to ₹14 lakh works cost) and itemize deliverable stages.',
+          'Maintain strict separation between architectural consultancy fees and material procurement billing.',
+          'Use transparent comparative BOQ tender sheets (3 comparable brands per item) so the client sees objective specification criteria.'
+        ],
+        momTemplate: 'PROCUREMENT POLICY [CoA Conduct Reg. 1989 Reg. 2(1)]: Our practice strictly prohibits vendor commissions or rebates. All trade discounts must be credited directly to the Client invoice, and material approvals remain subject to site QA inspection.'
+      },
+      {
+        id: 'sc-09',
+        pillar: 'material',
+        pillarLabel: '03. Material Relevance',
+        severity: 'high',
+        title: 'Exterior High-Pressure Laminate (HPL) & Wooden Louver Facade Warping',
+        code: 'NBC 2016 Part 6 (Wind Load IS 875-3)',
+        codeUrl: 'https://infralens.in/thumbrules',
+        context: 'West-facing facade cladding in high-UV, heavy-monsoon Indian city where HPL panels belly out or delaminate within 18 months.',
+        dilemma: 'Installing interior-grade laminate or sealing the rear air cavity behind exterior HPL panels traps solar heat (up to 70°C on west facades) and monsoon moisture, causing differential thermal expansion and panel buckling.',
+        protocol: [
+          'Specify UV-stabilized exterior-grade compact HPL (minimum 6 mm to 8 mm thickness, EDF grade) with double-sided decorative UV film.',
+          'Detail a continuous rear ventilated rainscreen cavity (minimum 25–40 mm clear air gap) with perforated insect mesh at base and top vents for stack-effect cooling.',
+          'Provide floating oversized rivet holes (8.0–8.5 mm hole in panel for 5 mm rivet with central fixed-point sleeve) on aluminum sub-framing to allow thermal movement.',
+          'Apply EPDM gasket tape on all aluminum vertical T-profiles and L-profiles before panel mounting.'
+        ],
+        momTemplate: 'FACADE QA [VENTILATED RAINSCREEN]: Exterior HPL installation must maintain min 30mm continuous rear air cavity, EPDM gasket backing on all aluminum profiles, and 8.5mm expansion holes with fixed central point per panel.'
+      },
+      {
+        id: 'sc-10',
+        pillar: 'people',
+        pillarLabel: '05. People Management',
+        severity: 'standard',
+        title: 'Resolving Head Mistri vs. Young Architect Friction on Mockup Standards',
+        code: 'IS 456:2000 Cl. 8 & Site QA Protocol',
+        codeUrl: 'https://www.bctengineer.com/q/semester_5/concrete_technology_and_masonry_structure/corrosion-preventive-measures',
+        context: 'Senior mason/mistri dismisses 23-year-old architect’s plumbing line-level and tile-drop instructions saying "Hum 20 saal se aise hi karte hain" (We have done it like this for 20 years).',
+        dilemma: 'Direct verbal confrontation in front of site labour triggers defensive pushback, passive sabotage, or delays. Conversely, backing down results in reverse bathroom slopes, ponding, and unaligned switchboards.',
+        protocol: [
+          'Shift from abstract verbal argument to a mandatory 1-room physical "First-Off Mockup" (Quality Benchmark Sample) before bulk work starts.',
+          'Inspect with tools in hand (2m aluminum straightedge, spirit level, right-angle katkon, and laser level) so the measurement—not personal ego—demonstrates the deviation.',
+          'Channel contractual deductions and rework notices through the Site Engineer / Contractor Partner rather than arguing directly with daily-wage labour.',
+          'Publicly acknowledge good craftsmanship when the mistri hits the exact 1:80 wet-area floor slope or crisp groove alignment.'
+        ],
+        momTemplate: 'SITE BENCHMARK [MOCKUP PROTOCOL]: Bulk tiling/plastering across floors is held until Sample Toilet #1 mockup (button marks, katkon right-angle check, and 1:80 floor drop to nahani trap) is jointly inspected and signed off.'
+      },
+      {
+        id: 'sc-11',
+        pillar: 'decision',
+        pillarLabel: '01. Decision Making',
+        severity: 'high',
+        title: 'Kota Stone vs. Vitrified Tile Selection in High-Traffic Institutional Corridors',
+        code: 'IS 14223 (Polished Building Stones)',
+        codeUrl: 'https://infralens.in/thumbrules',
+        context: 'Value engineering decision for an educational/cultural building corridor, staircase treads, and semi-open verandah.',
+        dilemma: 'Vitrified tiles offer fast installation on thin-set adhesive, but chipped edges or discontinued batch shades make 10-year institutional maintenance difficult. Natural Kota stone (25–30 mm thick) lasts 50+ years and can be re-polished in situ, though it requires skilled mortar bedding and acid-wash protection.',
+        protocol: [
+          'Specify 25–30 mm machine-cut, pre-polished Kota stone for heavy-footfall staircases, ramps, and semi-open verandahs; reserve vitrified tiles for dry upper-floor offices where dead-load savings govern.',
+          'Detail 3 mm brass, PVC, or stainless-steel dividing strips at 1.2 m x 1.2 m bays in Kota flooring and 4 mm carborundum anti-skid grooves on stair nosings.',
+          'Prohibit harsh hydrochloric (muriatic) acid cleaning on Kota stone after laying—mandate neutral stone sealer and wax/mirror buffing.',
+          'Compare life-cycle cost over 15 years (zero replacement for Kota vs. 15% tile breakage replacement) when presenting to client.'
+        ],
+        momTemplate: 'MATERIAL SPECIFICATION [LIFE-CYCLE VE]: Approved 25mm machine-cut Kota stone on 20mm 1:4 cement mortar bed for corridors and stair treads with 3mm dividing strips and anti-skid nosing grooves. Zero acid wash permitted post-laying.'
+      },
+      {
+        id: 'sc-12',
+        pillar: 'critical',
+        pillarLabel: '02. Critical Thinking',
+        severity: 'high',
+        title: 'Post-De-shuttering Column-Beam Junction Honeycombing Triage',
+        code: 'IS 456:2000 Cl. 11.3 & Cl. 13.4',
+        codeUrl: 'https://infralens.in/code/IS-456-2000/clause/11',
+        context: 'Side shuttering removed at 16–24 hours reveals exposed coarse aggregate and voids at a congested beam-column junction; mason tries to hide it immediately with neat cement slurry.',
+        dilemma: 'Cosmetic plastering over structural honeycombing traps air pockets, accelerates rebar corrosion, and conceals reduced effective cross-sectional area in a critical seismic joint.',
+        protocol: [
+          'Forbid cosmetic plastering upon 16-hour vertical side-form removal; photograph and classify whether honeycombing is superficial (confined to cover zone) or deep (extending behind main stirrups/core).',
+          'Chisel away all loose, uncompacted aggregate until sound concrete is reached, and clean with wire brush and high-pressure water jet.',
+          'For superficial cover-zone voids: apply epoxy bonding agent followed by polymer-modified non-shrink structural repair mortar.',
+          'For deep core voids: install injection packers and perform low-pressure non-shrink cementitious/epoxy grouting under Structural Engineer supervision, followed by ultrasonic pulse velocity (UPV) testing.'
+        ],
+        momTemplate: 'NON-CONFORMANCE REPORT [IS 456 Cl. 13.4]: Cosmetic plastering of honeycombed RCC column-beam joint is strictly prohibited. Chip loose aggregate to sound core, photograph depth, and execute non-shrink pressure grouting after joint inspection.'
+      }
+    ];
+
+    const WIZARD_CASES = [
+      {
+        id: 'wiz-1',
+        badge: 'STRUCTURAL EMERGENCY',
+        title: 'Contractor Loosening Slab Props at Day 4–5',
+        code: 'IS 456:2000 Clause 11.3.1',
+        codeUrl: 'https://thecivilstudies.com/shuttering-removal-time-is-456/',
+        summary: 'Contractor claims concrete is "hard enough in Indian summer" and starts knocking out vertical props under a 5.0 m span slab to shift centering to the next floor.',
+        liability: 'HIGH STRUCTURAL LIABILITY: Early removal before concrete attains at least 2x the induced stress causes irreversible plastic deflection and punching/flexural cracking.',
+        immediateSteps: [
+          'Halt prop removal immediately and order immediate re-tightening of any loosened telescopic steel props.',
+          'Quote IS 456:2000 Clause 11.3.1: while slab soffit ply can be removed at 3 days IF props are refixed immediately, props for spans > 4.5 m must remain for 14 days (7 days for spans <= 4.5 m).',
+          'If PPC (fly-ash) cement was used, remind the contractor that strength gain is slower than OPC and stripping requires either extended curing days or a pass on field-cured cube compression tests.'
+        ],
+        whatsappNotice: 'URGENT STOP WORK [IS 456:2000 Cl. 11.3.1]: Do not remove vertical props under the slab (span > 4.5m) before completing the mandatory 14-day period (or submitting a verified field-cured cube test report >= 2x stress). Re-tighten all disturbed props immediately and send confirmation photo.'
+      },
+      {
+        id: 'wiz-2',
+        badge: 'MEP / STRUCTURAL CLASH',
+        title: 'Unapproved Core-Cut Requested Through RCC Beam',
+        code: 'IS 456:2000 Cl. 35.3.2 & NBC Part 6',
+        codeUrl: 'https://infralens.in/code/IS-456-2000',
+        summary: 'HVAC or plumbing subcontractor marks a 125 mm core hole through an existing RCC floor beam near the column support to pass a drainage/chiller pipe.',
+        liability: 'CRITICAL SHEAR FAILURE RISK: Cutting stirrups within 2d of the column support or severing bottom tension bars compromises structural safety.',
+        immediateSteps: [
+          'Deny permission to drill near column faces (within 2x beam depth) or bottom tension zones under all circumstances.',
+          'Check if the pipe can be routed below the beam soffit inside a boxed false-ceiling bulkhead or dropped pelmet.',
+          'If mid-span neutral-axis web sleeve is unavoidable, obtain written structural calculations + BBS check from the Structural Engineer and scan rebar positions before coring.'
+        ],
+        whatsappNotice: 'HOLD CORE DRILLING [STRUCTURAL SAFETY]: Core-cutting in RCC beams is strictly prohibited without written Structural Engineer sign-off and BBS check. Do not drill within 2d of column face. Route pipe below beam soffit or await structural clearance.'
+      },
+      {
+        id: 'wiz-3',
+        badge: 'STATUTORY / RERA',
+        title: 'Client / Sales Team Demands Inflated RERA Carpet Area',
+        code: 'RERA Act 2016 Section 2(k)',
+        codeUrl: 'https://indiankanoon.org/doc/47417973/',
+        summary: 'Developer asks you to include exclusive balconies, flower beds, and outer brick walls inside the "RERA Carpet Area" table on the Architect Certificate.',
+        liability: 'STATUTORY PENALTY & REGISTRATION RISK: Misstating Section 2(k) carpet area exposes both promoter and certifying architect to RERA tribunal penalties and buyer litigation.',
+        immediateSteps: [
+          'Show the exact wording of RERA Act 2016 Section 2(k): Carpet Area includes internal partition walls but strictly excludes external walls, service shafts, exclusive balconies/verandahs, and open terraces.',
+          'Present a dual-column area statement showing (Col A) Net RERA Carpet Area and (Col B) Exclusive Balcony / Verandah / Terrace Area so total usable space is still clearly communicated to buyers without violating the Act.'
+        ],
+        whatsappNotice: 'STATUTORY CLARIFICATION [RERA Act 2016 Sec 2(k)]: Per Section 2(k), the Architect Certificate can only include net usable floor area + internal partition walls in Carpet Area. External walls, shafts, balconies, and terraces will be itemized in a separate adjacent column.'
+      },
+      {
+        id: 'wiz-4',
+        badge: 'FIRE & LIFE SAFETY',
+        title: 'Staircase Width Reduced Below NBC Part 4 Mandate',
+        code: 'NBC 2016 Part 4 (Fire & Life Safety)',
+        codeUrl: 'https://www.securedengineers.com/architects/checklists/nbc-fire-life-safety/',
+        summary: 'During GFC coordination, column projections or masonry walls encroach into the fire exit staircase flight, reducing clear width below code.',
+        liability: 'OC / FIRE NOC REJECTION: Chief Fire Officer inspection measures clear unobstructed flight width; even a 50 mm shortfall blocks Occupancy Certificate (OC).',
+        immediateSteps: [
+          'Verify occupancy requirement per NBC 2016 Part 4: 1.0 m clear width for Residential, 1.5 m for Business/Mercantile/Educational/Industrial, and 2.0 m for Institutional/Assembly.',
+          'Add 50–75 mm construction buffer on masonry/RCC working drawings (e.g., detail 1,575 mm raw RCC width to guarantee 1,500 mm clear finished width after plaster and handrail projection).',
+          'Confirm fire door has a minimum 120-minute rating and swings in the direction of egress travel.'
+        ],
+        whatsappNotice: 'DIMENSION AUDIT [NBC 2016 Part 4]: Maintain clear finished staircase flight width of 1.50m (Business/Educational) / 1.00m (Residential) / 2.00m (Institutional) clear of plaster and handrails, with 120-min rated fire doors opening in direction of escape.'
+      },
+      {
+        id: 'wiz-5',
+        badge: 'PROFESSIONAL ETHICS',
+        title: 'Material Supplier Offers Secret "Architect Cut"',
+        code: 'CoA Professional Conduct Reg. 1989, Reg. 2(1)',
+        codeUrl: 'https://coa.gov.in/showfile.php?lang=1&level=1&sublinkid=208&lid=152',
+        summary: 'A tile, lighting, or modular kitchen dealer offers you a 10–15% commission behind the client’s back in exchange for single-brand specification.',
+        liability: 'PROFESSIONAL MISCONDUCT & LOSS OF SITE AUTHORITY: Violates Regulation 2(1) of the Architects (Professional Conduct) Regulations, 1989 and compromises your ability to reject bad deliveries.',
+        immediateSteps: [
+          'Decline the commission immediately and instruct the vendor via email/WhatsApp to apply the entire discount directly to the client’s pro-forma invoice.',
+          'Specify 3 equivalent approved makes in the tender BOQ so vendors compete transparently on net landed cost and quality.'
+        ],
+        whatsappNotice: 'VENDOR POLICY [CoA Reg. 1989 Reg. 2(1)]: Please pass 100% of trade/project discounts directly onto the Client quotation. Our office does not accept referral commissions or dealer rebates.'
+      }
+    ];
+
+    // =========================================================
+    // 2. APPLICATION STATE & SAFE LOCALSTORAGE HELPERS
+    // =========================================================
+    const state = {
+      activeView: 'compendium',
+      searchQuery: '',
+      selectedPillar: 'all',
+      selectedSeverity: 'all',
+      pinnedOnly: false,
+      bookmarks: [],
+      checkedSteps: {},
+      customScenarios: [],
+      selectedWizardId: WIZARD_CASES[0].id
+    };
+
+    function loadPersistedState() {
+      try {
+        const savedBookmarks = localStorage.getItem('sthapati_bookmarks');
+        if (savedBookmarks) state.bookmarks = JSON.parse(savedBookmarks);
+
+        const savedChecks = localStorage.getItem('sthapati_checked_steps');
+        if (savedChecks) state.checkedSteps = JSON.parse(savedChecks);
+
+        const savedCustom = localStorage.getItem('sthapati_custom_scenarios');
+        if (savedCustom) state.customScenarios = JSON.parse(savedCustom);
+      } catch (e) {
+        // Fallback to in-memory state in restricted environments
+      }
+    }
+
+    function savePersistedState() {
+      try {
+        localStorage.setItem('sthapati_bookmarks', JSON.stringify(state.bookmarks));
+        localStorage.setItem('sthapati_checked_steps', JSON.stringify(state.checkedSteps));
+        localStorage.setItem('sthapati_custom_scenarios', JSON.stringify(state.customScenarios));
+      } catch (e) {
+        // Ignore storage write errors in sandboxed preview
+      }
+    }
+
+    function getAllScenarios() {
+      return [...state.customScenarios, ...INITIAL_SCENARIOS];
+    }
+
+    // =========================================================
+    // 3. CLIPBOARD & TOAST HELPERS
+    // =========================================================
+    let toastTimeout = null;
+    function showToast(msg) {
+      const box = document.getElementById('toastBox');
+      const text = document.getElementById('toastMessage');
+      if (!box || !text) return;
+      text.textContent = msg;
+      box.classList.remove('hidden');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        box.classList.add('hidden');
+      }, 2800);
+    }
+
+    function copyTextToClipboard(text, label) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(label || 'Copied to clipboard');
+        }).catch(() => {
+          fallbackCopy(text, label);
+        });
+      } else {
+        fallbackCopy(text, label);
+      }
+    }
+
+    function fallbackCopy(text, label) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast(label || 'Copied to clipboard');
+      } catch (err) {
+        showToast('Ready to copy');
+      }
+      document.body.removeChild(ta);
+    }
+
+    // =========================================================
+    // 4. RENDER COMPENDIUM VIEW
+    // =========================================================
+    function getSeverityBadge(severity) {
+      if (severity === 'critical') {
+        return '<span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-red-500/20 text-red-300 border border-red-500/40">Critical Liability</span>';
+      }
+      if (severity === 'high') {
+        return '<span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-amber-500/20 text-amber-300 border border-amber-500/40">High Site Risk</span>';
+      }
+      return '<span class="px-2 py-0.5 rounded text-[10px] font-mono uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Standard Practice</span>';
+    }
+
+    function updateKPIs() {
+      const all = getAllScenarios();
+      let totalSteps = 0;
+      let completedSteps = 0;
+      all.forEach(sc => {
+        sc.protocol.forEach((_, idx) => {
+          totalSteps++;
+          if (state.checkedSteps[sc.id + '_' + idx]) completedSteps++;
+        });
+      });
+
+      document.getElementById('kpiChecklistProgress').textContent = completedSteps + ' / ' + totalSteps + ' Steps';
+      document.getElementById('kpiBookmarksCount').textContent = state.bookmarks.length + ' Pinned';
+      document.getElementById('navCountBadge').textContent = String(all.length);
+      document.getElementById('customNotesCountBadge').textContent = String(state.customScenarios.length);
+
+      const allPillBtn = document.querySelector('[data-pillar="all"]');
+      if (allPillBtn) allPillBtn.textContent = 'All Pillars (' + all.length + ')';
+    }
+
+    function renderCompendium() {
+      updateKPIs();
+      const all = getAllScenarios();
+      const q = state.searchQuery.trim().toLowerCase();
+
+      const filtered = all.filter(sc => {
+        if (state.selectedPillar !== 'all' && sc.pillar !== state.selectedPillar) return false;
+        if (state.selectedSeverity !== 'all' && sc.severity !== state.selectedSeverity) return false;
+        if (state.pinnedOnly && !state.bookmarks.includes(sc.id)) return false;
+        if (q) {
+          const hay = [
+            sc.title,
+            sc.code,
+            sc.context,
+            sc.dilemma,
+            sc.pillarLabel,
+            ...(sc.protocol || [])
+          ].join(' ').toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+
+      const statusText = document.getElementById('resultsStatusText');
+      const resetBtn = document.getElementById('resetAllFiltersBtn');
+      const hasActiveFilters = state.selectedPillar !== 'all' || state.selectedSeverity !== 'all' || state.pinnedOnly || q.length > 0;
+
+      statusText.textContent = 'Showing ' + filtered.length + ' of ' + all.length + ' verified field scenarios';
+      if (hasActiveFilters) {
+        resetBtn.classList.remove('hidden');
+      } else {
+        resetBtn.classList.add('hidden');
+      }
+
+      const grid = document.getElementById('cardsGrid');
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full tectonic-card rounded-xl p-10 text-center space-y-3">
+            <p class="text-base font-display font-bold text-white">No matching site scenarios found</p>
+            <p class="text-xs text-gray-400 max-w-md mx-auto">Try clearing your search filter or log a new project observation into the compendium.</p>
+            <button id="emptyResetBtn" class="px-4 py-2 rounded-lg bg-ochre text-white text-xs font-medium">Reset All Filters</button>
+          </div>
+        `;
+        const emptyBtn = document.getElementById('emptyResetBtn');
+        if (emptyBtn) emptyBtn.addEventListener('click', resetAllFilters);
+        return;
+      }
+
+      grid.innerHTML = filtered.map(sc => {
+        const isPinned = state.bookmarks.includes(sc.id);
+        const stepsHtml = sc.protocol.map((step, idx) => {
+          const key = sc.id + '_' + idx;
+          const isChecked = !!state.checkedSteps[key];
+          return `
+            <label class="flex items-start gap-2.5 p-2 rounded-lg bg-[#111317] hover:bg-[#15181E] border border-borderconcrete/60 cursor-pointer transition">
+              <input type="checkbox" data-check-key="${key}" ${isChecked ? 'checked' : ''} class="step-checkbox mt-0.5 accent-ochre rounded cursor-pointer" />
+              <span class="text-xs leading-relaxed ${isChecked ? 'line-through text-gray-500' : 'text-gray-200'}">${step}</span>
+            </label>
+          `;
+        }).join('');
+
+        return `
+          <article class="tectonic-card rounded-xl p-5 flex flex-col justify-between space-y-4">
+            <div class="space-y-3">
+              <!-- Card Top Metadata Bar -->
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/5 text-gray-300 border border-borderconcrete">${sc.pillarLabel}</span>
+                  ${getSeverityBadge(sc.severity)}
+                  ${sc.isCustom ? '<span class="px-2 py-0.5 rounded text-[10px] font-mono bg-ochre/20 text-ochrelight border border-ochre/40">Custom Log</span>' : ''}
+                </div>
+
+                <button data-bookmark-id="${sc.id}" class="bookmark-btn p-1.5 rounded-lg border ${isPinned ? 'border-sky-400 bg-sky-500/20 text-sky-300' : 'border-borderconcrete bg-[#0E1013] text-gray-400 hover:text-white'} transition" title="Pin scenario for site visit">
+                  <i data-lucide="bookmark" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+
+              <!-- Title & Code Link -->
+              <div>
+                <h3 class="text-base font-display font-bold text-white leading-snug">${sc.title}</h3>
+                <div class="flex flex-wrap items-center gap-2 mt-1.5">
+                  <a href="${sc.codeUrl || 'https://infralens.in/code/IS-456-2000'}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] font-mono text-ochrelight hover:underline">
+                    <span>${sc.code}</span>
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                  </a>
+                  <span class="text-gray-600">&bull;</span>
+                  <span class="text-[11px] text-gray-400">${sc.context}</span>
+                </div>
+              </div>
+
+              <!-- Site Dilemma Box -->
+              <div class="p-3 rounded-lg bg-[#0D0E11] border-l-2 border-l-ochre text-xs text-gray-300 leading-relaxed">
+                <span class="font-mono text-[10px] uppercase text-ochrelight block mb-0.5">Technical &amp; Codal Analysis:</span>
+                ${sc.dilemma}
+              </div>
+
+              <!-- Field Protocol Checklist -->
+              <div class="space-y-1.5">
+                <p class="text-[11px] font-mono uppercase text-gray-400">Field Execution Protocol (Tap to check off on site):</p>
+                <div class="space-y-1.5">
+                  ${stepsHtml}
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Action Bar -->
+            <div class="pt-3 border-t border-borderconcrete flex items-center justify-between gap-2">
+              <span class="text-[10px] font-mono text-gray-500">ID: ${sc.id.toUpperCase()}</span>
+              <button data-mom-id="${sc.id}" class="copy-mom-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-ochre/15 hover:bg-ochre text-ochrelight hover:text-white border border-ochre/40 text-xs font-mono transition">
+                <i data-lucide="message-square-share" class="w-3.5 h-3.5"></i>
+                <span>Copy WhatsApp Site MOM</span>
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    function resetAllFilters() {
+      state.searchQuery = '';
+      state.selectedPillar = 'all';
+      state.selectedSeverity = 'all';
+      state.pinnedOnly = false;
+      document.getElementById('searchInput').value = '';
+      document.getElementById('clearSearchBtn').classList.add('hidden');
+      document.getElementById('severitySelect').value = 'all';
+      updatePillarPillsUI();
+      updateBookmarkFilterUI();
+      renderCompendium();
+    }
+
+    function updatePillarPillsUI() {
+      document.querySelectorAll('.pillar-pill').forEach(btn => {
+        if (btn.getAttribute('data-pillar') === state.selectedPillar) {
+          btn.className = 'pillar-pill px-3 py-1.5 rounded-lg text-xs font-medium bg-ochre text-white border border-ochre transition whitespace-nowrap';
+        } else {
+          btn.className = 'pillar-pill px-3 py-1.5 rounded-lg text-xs font-medium bg-[#0E1013] text-gray-300 border border-borderconcrete hover:border-gray-500 transition whitespace-nowrap';
+        }
+      });
+    }
+
+    function updateBookmarkFilterUI() {
+      const btn = document.getElementById('bookmarkFilterBtn');
+      if (state.pinnedOnly) {
+        btn.className = 'inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-lg border border-sky-400 bg-sky-500/20 text-xs font-mono text-sky-300 transition shrink-0';
+      } else {
+        btn.className = 'inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-lg border border-borderconcrete bg-[#0E1013] hover:border-gray-500 text-xs font-mono text-gray-300 transition shrink-0';
+      }
+    }
+
+    // =========================================================
+    // 5. CODAL CALCULATORS LOGIC (IS 456, NBC 2016, IS 2185-3)
+    // =========================================================
+    function updateCalculators() {
+      // Calculator 1: IS 456 Formwork Stripping, Cover & Cube Sampling
+      const member = document.getElementById('calcMemberSelect').value;
+      const cement = document.getElementById('calcCementSelect').value;
+      const exposure = document.getElementById('calcExposureSelect').value;
+      const volume = Math.max(1, parseInt(document.getElementById('calcPourVolume').value || '1', 10));
+
+      document.getElementById('calcPourVolumeLabel').textContent = volume + ' m³';
+
+      const strippingMap = {
+        vertical: { opc: '16–24 Hours', ppc: '24–36 Hours', note: 'Vertical side forms to columns, walls, and beams (IS 456 Cl. 11.3.1).' },
+        slab_soffit: { opc: '3 Days*', ppc: '5 Days*', note: '*Props MUST be refixed immediately after stripping slab soffit formwork.' },
+        beam_soffit: { opc: '7 Days*', ppc: '10 Days*', note: '*Props MUST be refixed immediately after stripping beam soffit formwork.' },
+        slab_props_short: { opc: '7 Days', ppc: '10 Days', note: 'Props to slabs spanning up to 4.5 m (IS 456 Cl. 11.3.1).' },
+        slab_props_long: { opc: '14 Days', ppc: '18–21 Days', note: 'Props to slabs spanning over 4.5 m (IS 456 Cl. 11.3.1).' },
+        beam_props_short: { opc: '14 Days', ppc: '18–21 Days', note: 'Props to beams and arches spanning up to 6.0 m (IS 456 Cl. 11.3.1).' },
+        beam_props_long: { opc: '21 Days', ppc: '28 Days', note: 'Props to beams and arches spanning over 6.0 m (IS 456 Cl. 11.3.1).' }
+      };
+
+      const coverMap = {
+        mild: '20 mm',
+        moderate: '30 mm',
+        severe: '45 mm',
+        very_severe: '50 mm',
+        extreme: '75 mm'
+      };
+
+      // IS 456 Clause 15.2.2 Cube Sampling Frequency
+      let samples = 1;
+      if (volume <= 5) samples = 1;
+      else if (volume <= 15) samples = 2;
+      else if (volume <= 30) samples = 3;
+      else if (volume <= 50) samples = 4;
+      else samples = 4 + Math.ceil((volume - 50) / 50);
+
+      const totalCubes = samples * 3;
+      const stripInfo = strippingMap[member] || strippingMap.slab_props_short;
+
+      document.getElementById('outStrippingTime').textContent = stripInfo[cement];
+      document.getElementById('outCubeSamples').textContent = samples + (samples === 1 ? ' Sample (' : ' Samples (') + totalCubes + ' Cubes)';
+      document.getElementById('outNominalCover').textContent = coverMap[exposure] || '30 mm';
+      document.getElementById('outRccAdvisory').textContent =
+        stripInfo.note + ' Note: Footings require min 50 mm cover and main column bars min 40 mm regardless of exposure. For PPC cement, IS 456 requires extended curing/stripping or cube verification showing concrete strength >= 2x induced stress.';
+
+      // Calculator 2: NBC 2016 Fire Stair & IS 2185 Part 3 AAC Block Estimator
+      const occ = document.getElementById('calcOccupancySelect').value;
+      const thick = parseInt(document.getElementById('calcAacThickness').value || '200', 10);
+      const wallArea = Math.max(1, parseFloat(document.getElementById('calcWallArea').value || '100'));
+
+      const stairMap = {
+        residential: { width: '1.00 m', travel: '22.5 m', desc: 'Group A Residential (NBC 2016 Part 4)' },
+        business: { width: '1.50 m', travel: '30.0 m', desc: 'Educational / Business / Mercantile (NBC 2016 Part 4)' },
+        institutional: { width: '2.00 m', travel: '22.5–30.0 m', desc: 'Institutional (Hospitals) & Assembly (NBC 2016 Part 4)' }
+      };
+
+      const aacSpecMap = {
+        100: { perM3: 83, weight: '6.6–7.8 kg' },
+        150: { perM3: 56, weight: '9.9–11.7 kg' },
+        200: { perM3: 42, weight: '13.2–15.6 kg' },
+        230: { perM3: 36, weight: '15.2–17.9 kg' },
+        250: { perM3: 33, weight: '16.5–19.5 kg' }
+      };
+
+      // Each 600 x 200 mm AAC block covers 0.12 m² of wall face (8.333 blocks/m²)
+      const exactBlocks = Math.ceil(wallArea / 0.12);
+      const stairInfo = stairMap[occ] || stairMap.business;
+      const aacInfo = aacSpecMap[thick] || aacSpecMap[200];
+
+      document.getElementById('outStairWidth').textContent = stairInfo.width;
+      document.getElementById('outAacCount').textContent = exactBlocks.toLocaleString('en-IN') + ' Blocks';
+      document.getElementById('outAacWeight').textContent = aacInfo.weight;
+      document.getElementById('outNbcAacAdvisory').textContent =
+        stairInfo.desc + ': Max travel distance to exit ' + stairInfo.travel + ' via 120-min rated fire door. ' +
+        'IS 2185 (Part 3): 600×200×' + thick + ' mm AAC blocks yield ' + aacInfo.perM3 + ' blocks/m³ (8.33 blocks/m², max drying shrinkage 0.06%, compressive strength 2.0–7.0 N/mm² by grade).';
+    }
+
+    // =========================================================
+    // 6. SITE DILEMMA TRIAGE WIZARD RENDERER
+    // =========================================================
+    function renderWizard() {
+      const listEl = document.getElementById('wizardSelectorList');
+      const outputEl = document.getElementById('wizardOutputPanel');
+
+      listEl.innerHTML = WIZARD_CASES.map(w => {
+        const active = w.id === state.selectedWizardId;
+        return `
+          <button data-wiz-id="${w.id}" class="wizard-select-btn w-full text-left p-4 rounded-xl border transition flex items-start justify-between gap-3 ${active ? 'bg-ochre/15 border-ochre text-white shadow-md' : 'bg-[#181A1E] border-borderconcrete text-gray-300 hover:border-gray-500'}">
+            <div class="space-y-1">
+              <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded ${active ? 'bg-ochre text-white' : 'bg-white/5 text-gray-400'}">${w.badge}</span>
+              <p class="text-sm font-display font-bold text-white pt-0.5">${w.title}</p>
+              <p class="text-[11px] font-mono text-gray-400">${w.code}</p>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 mt-1 shrink-0 ${active ? 'text-ochrelight' : 'text-gray-500'}"></i>
+          </button>
+        `;
+      }).join('');
+
+      const activeCase = WIZARD_CASES.find(w => w.id === state.selectedWizardId) || WIZARD_CASES[0];
+
+      outputEl.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-borderconcrete pb-3">
+          <div>
+            <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/40">${activeCase.badge}</span>
+            <h3 class="text-lg font-display font-bold text-white mt-1.5">${activeCase.title}</h3>
+          </div>
+          <a href="${activeCase.codeUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-borderconcrete text-xs font-mono text-ochrelight">
+            <span>${activeCase.code}</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+
+        <div class="space-y-4">
+          <div class="p-3.5 rounded-xl bg-[#111317] border border-borderconcrete">
+            <p class="text-[10px] font-mono uppercase text-gray-400 mb-1">Live Site Situation:</p>
+            <p class="text-xs text-gray-200 leading-relaxed">${activeCase.summary}</p>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-red-950/30 border border-red-500/40">
+            <p class="text-[10px] font-mono uppercase text-red-300 mb-1">Statutory &amp; Structural Risk:</p>
+            <p class="text-xs text-red-100 leading-relaxed font-medium">${activeCase.liability}</p>
+          </div>
+
+          <div class="space-y-2">
+            <p class="text-xs font-mono uppercase text-gray-300">Immediate Architect Action Protocol:</p>
+            <ol class="space-y-2">
+              ${activeCase.immediateSteps.map((step, i) => `
+                <li class="flex items-start gap-2.5 text-xs text-gray-200 bg-[#111317] p-3 rounded-lg border border-borderconcrete">
+                  <span class="w-5 h-5 rounded-full bg-ochre/20 border border-ochre text-ochrelight font-mono text-[11px] flex items-center justify-center shrink-0">${i + 1}</span>
+                  <span class="leading-relaxed">${step}</span>
+                </li>
+              `).join('')}
+            </ol>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#0B0C0E] border border-ochre/50 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono uppercase text-ochrelight">Ready-to-Paste WhatsApp / Site Instruction Notice</span>
+              <button id="copyWizardNoticeBtn" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-ochre hover:bg-ochrelight text-white text-xs font-mono transition">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                <span>Copy Notice</span>
+              </button>
+            </div>
+            <p class="text-xs font-mono text-gray-300 leading-relaxed select-all">${activeCase.whatsappNotice}</p>
+          </div>
+        </div>
+      `;
+
+      const copyBtn = document.getElementById('copyWizardNoticeBtn');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+          copyTextToClipboard(activeCase.whatsappNotice, 'Site Instruction copied for WhatsApp');
+        });
+      }
+
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    // =========================================================
+    // 7. CUSTOM SITE LOGBOOK RENDERER
+    // =========================================================
+    function renderCustomLogbook() {
+      const container = document.getElementById('customLogsContainer');
+      if (state.customScenarios.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full tectonic-card rounded-xl p-10 text-center space-y-3">
+            <div class="w-10 h-10 rounded-full bg-ochre/20 border border-ochre text-ochrelight mx-auto flex items-center justify-center">
+              <i data-lucide="notebook-pen" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base font-display font-bold text-white">Your Personal Site Logbook is Empty</h3>
+            <p class="text-xs text-gray-400 max-w-md mx-auto">Click "+ Add Field Entry" to record a site inspection finding, local municipal rule, or contractor detail. Every entry automatically appears in the main Field Compendium too.</p>
+          </div>
+        `;
+        if (window.lucide) window.lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = state.customScenarios.map(sc => `
+        <div class="tectonic-card rounded-xl p-5 space-y-3 flex flex-col justify-between">
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-ochre/20 text-ochrelight border border-ochre/40">${sc.pillarLabel}</span>
+              <button data-delete-log="${sc.id}" class="delete-log-btn text-xs font-mono text-gray-400 hover:text-red-400">Delete</button>
+            </div>
+            <h3 class="text-base font-display font-bold text-white">${sc.title}</h3>
+            <p class="text-xs font-mono text-emerald-400">${sc.code} &bull; ${sc.context}</p>
+            <p class="text-xs text-gray-300 leading-relaxed">${sc.dilemma}</p>
+            <ul class="space-y-1 pt-1">
+              ${sc.protocol.map(p => `<li class="text-xs text-gray-400 font-mono">&bull; ${p}</li>`).join('')}
+            </ul>
+          </div>
+          <div class="pt-3 border-t border-borderconcrete flex justify-end">
+            <button data-mom-id="${sc.id}" class="copy-mom-btn text-xs font-mono text-ochrelight hover:underline">Copy Site MOM</button>
+          </div>
+        </div>
+      `).join('');
+
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    // =========================================================
+    // 8. VIEW NAVIGATION & EVENT DELEGATION
+    // =========================================================
+    function switchView(viewName) {
+      state.activeView = viewName;
+      ['compendium', 'calculators', 'wizard', 'logbook'].forEach(v => {
+        const sec = document.getElementById('view-' + v);
+        if (sec) {
+          if (v === viewName) sec.classList.remove('hidden');
+          else sec.classList.add('hidden');
+        }
+      });
+
+      document.querySelectorAll('.view-tab-btn').forEach(btn => {
+        const v = btn.getAttribute('data-view');
+        if (v === viewName) {
+          btn.className = 'view-tab-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium transition whitespace-nowrap bg-ochre text-white shadow';
+        } else {
+          btn.className = 'view-tab-btn flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium transition whitespace-nowrap text-gray-400 hover:text-white hover:bg-white/5';
+        }
+      });
+
+      if (viewName === 'compendium') renderCompendium();
+      if (viewName === 'calculators') updateCalculators();
+      if (viewName === 'wizard') renderWizard();
+      if (viewName === 'logbook') renderCustomLogbook();
+    }
+
+    function openNoteModal() {
+      document.getElementById('noteModal').classList.remove('hidden');
+    }
+
+    function closeNoteModal() {
+      document.getElementById('noteModal').classList.add('hidden');
+    }
+
+    // Initialize everything on DOM ready
+    window.addEventListener('DOMContentLoaded', () => {
+      loadPersistedState();
+      renderCompendium();
+      updateCalculators();
+      renderWizard();
+      renderCustomLogbook();
+
+      // View switcher buttons
+      document.querySelectorAll('.view-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          switchView(btn.getAttribute('data-view'));
+        });
+      });
+
+      // Search input
+      const searchInput = document.getElementById('searchInput');
+      const clearSearchBtn = document.getElementById('clearSearchBtn');
+      searchInput.addEventListener('input', (e) => {
+        state.searchQuery = e.target.value;
+        if (state.searchQuery.length > 0) clearSearchBtn.classList.remove('hidden');
+        else clearSearchBtn.classList.add('hidden');
+        renderCompendium();
+      });
+
+      clearSearchBtn.addEventListener('click', () => {
+        state.searchQuery = '';
+        searchInput.value = '';
+        clearSearchBtn.classList.add('hidden');
+        renderCompendium();
+      });
+
+      // Severity select
+      document.getElementById('severitySelect').addEventListener('change', (e) => {
+        state.selectedSeverity = e.target.value;
+        renderCompendium();
+      });
+
+      // Bookmark filter button
+      document.getElementById('bookmarkFilterBtn').addEventListener('click', () => {
+        state.pinnedOnly = !state.pinnedOnly;
+        updateBookmarkFilterUI();
+        renderCompendium();
+      });
+
+      // Reset all filters button
+      document.getElementById('resetAllFiltersBtn').addEventListener('click', resetAllFilters);
+
+      // Pillar pills delegation
+      document.getElementById('pillarFilterContainer').addEventListener('click', (e) => {
+        const pill = e.target.closest('.pillar-pill');
+        if (!pill) return;
+        state.selectedPillar = pill.getAttribute('data-pillar');
+        updatePillarPillsUI();
+        renderCompendium();
+      });
+
+      // Compendium cards delegation (checkboxes, bookmarks, copy MOM)
+      document.body.addEventListener('click', (e) => {
+        const bookmarkBtn = e.target.closest('.bookmark-btn');
+        if (bookmarkBtn) {
+          const id = bookmarkBtn.getAttribute('data-bookmark-id');
+          const idx = state.bookmarks.indexOf(id);
+          if (idx === -1) {
+            state.bookmarks.push(id);
+            showToast('Scenario pinned to site bookmarks');
+          } else {
+            state.bookmarks.splice(idx, 1);
+            showToast('Removed from site bookmarks');
+          }
+          savePersistedState();
+          renderCompendium();
+          return;
+        }
+
+        const copyMomBtn = e.target.closest('.copy-mom-btn');
+        if (copyMomBtn) {
+          const id = copyMomBtn.getAttribute('data-mom-id');
+          const sc = getAllScenarios().find(item => item.id === id);
+          if (sc) {
+            copyTextToClipboard(sc.momTemplate, 'WhatsApp Site MOM copied');
+          }
+          return;
+        }
+
+        const wizBtn = e.target.closest('.wizard-select-btn');
+        if (wizBtn) {
+          state.selectedWizardId = wizBtn.getAttribute('data-wiz-id');
+          renderWizard();
+          return;
+        }
+
+        const delLogBtn = e.target.closest('.delete-log-btn');
+        if (delLogBtn) {
+          const id = delLogBtn.getAttribute('data-delete-log');
+          state.customScenarios = state.customScenarios.filter(item => item.id !== id);
+          savePersistedState();
+          renderCustomLogbook();
+          renderCompendium();
+          showToast('Deleted custom log entry');
+          return;
+        }
+      });
+
+      document.body.addEventListener('change', (e) => {
+        if (e.target.classList.contains('step-checkbox')) {
+          const key = e.target.getAttribute('data-check-key');
+          state.checkedSteps[key] = e.target.checked;
+          savePersistedState();
+          renderCompendium();
+        }
+      });
+
+      // Calculator inputs
+      ['calcMemberSelect', 'calcCementSelect', 'calcExposureSelect', 'calcPourVolume', 'calcOccupancySelect', 'calcAacThickness', 'calcWallArea'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', updateCalculators);
+          el.addEventListener('change', updateCalculators);
+        }
+      });
+
+      // Modal controls
+      document.getElementById('openNoteModalBtn').addEventListener('click', openNoteModal);
+      document.getElementById('openNoteModalBtnMobile').addEventListener('click', openNoteModal);
+      document.getElementById('openNoteModalBtnFromLog').addEventListener('click', openNoteModal);
+      document.getElementById('closeNoteModalBtn').addEventListener('click', closeNoteModal);
+      document.getElementById('cancelNoteModalBtn').addEventListener('click', closeNoteModal);
+
+      // Save new field note form
+      document.getElementById('noteForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const title = document.getElementById('noteTitle').value.trim();
+        const pillar = document.getElementById('notePillar').value;
+        const severity = document.getElementById('noteSeverity').value;
+        const code = document.getElementById('noteCode').value.trim();
+        const project = document.getElementById('noteProject').value.trim() || 'Indian Urban Site Log';
+        const dilemma = document.getElementById('noteDilemma').value.trim();
+        const rawProtocol = document.getElementById('noteProtocol').value.trim();
+
+        if (!title || !code || !dilemma || !rawProtocol) return;
+
+        const pillarNames = {
+          decision: '01. Decision Making',
+          critical: '02. Critical Thinking',
+          material: '03. Material Relevance',
+          field: '04. Field Knowledge',
+          people: '05. People Management',
+          evolution: '06. Practice Evolution'
+        };
+
+        const steps = rawProtocol.split('\n').map(s => s.trim()).filter(Boolean);
+        const newEntry = {
+          id: 'custom-' + Date.now().toString().slice(-5),
+          pillar,
+          pillarLabel: pillarNames[pillar] || '04. Field Knowledge',
+          severity,
+          title,
+          code,
+          codeUrl: 'https://infralens.in/code/IS-456-2000',
+          context: project,
+          dilemma,
+          protocol: steps.length ? steps : [rawProtocol],
+          momTemplate: 'SITE INSTRUCTION [' + code + ' — ' + title + ']: ' + (steps[0] || dilemma),
+          isCustom: true
+        };
+
+        state.customScenarios.unshift(newEntry);
+        savePersistedState();
+        document.getElementById('noteForm').reset();
+        closeNoteModal();
+        renderCompendium();
+        renderCustomLogbook();
+        showToast('Saved new entry to Field Compendium');
+      });
+
+      // Export custom logs JSON
+      document.getElementById('exportLogsBtn').addEventListener('click', () => {
+        const dataStr = JSON.stringify(getAllScenarios(), null, 2);
+        copyTextToClipboard(dataStr, 'Full Compendium JSON copied to clipboard');
+      });
+
+      if (window.lucide) window.lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
